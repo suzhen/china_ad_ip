@@ -52,8 +52,8 @@ module ChinaAdIp
       raise(::ArgumentError, "not exists: #{path}")
     else
       if $locations.nil?
-        $locations = CSV.read(path) 
-        $locations = Hash[$locations.map {|location| [location.shift,location] }]
+        $locations = CSV.read(path,:encoding=>"utf-8") 
+        $locations = Hash[$locations.map {|location| id = location.shift; [id,location << !!id.match(/^1156/)] }]
       end
     end
   end
@@ -67,7 +67,7 @@ module ChinaAdIp
 
       index = dichotomy(ip_addr.to_i,$ip_sections.collect{|ip_section| ip_section[0]}.to_a) 
 
-      $locations[$ip_sections[index][2]].to_s
+      $locations[$ip_sections[index][2]]
     else
       raise(::ArgumentError, "not exists csv data")    
     end
