@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = ChinaAdIp::VERSION
   spec.authors       = ["suezhen"]
   spec.email         = ["sz3001@gmail.com"]
-  spec.summary       = %q{TODO: locate ip in http://www.iac-i.org/ }
-  spec.description   = %q{TODO: locate ip in http://www.iac-i.org/ }
-  spec.homepage      = ""
+  spec.summary       = %q{locate ip, please download ip data file from http://www.iac-i.org/ }
+  spec.description   = %q{locate ip }
+  spec.homepage      = "https://github.com/suzhen/china_ad_ip"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
