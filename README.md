@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
- ChinaAdIp::location_file("./location.csv")
+ ChinaAdIp::ip_file("./superadmin.csv")
 
  ChinaAdIp::location_file("./location.csv")
 
