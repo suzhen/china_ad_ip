@@ -60,9 +60,9 @@ module ChinaAdIp
     unless FileTest::exist?(path)
       raise(::ArgumentError, "not exists: #{path}")
     else
-      if $ip_sections.nil?
-        $ip_sections = CSV.read(path) 
-        $ip_sections.reject!{|ip_section| ChinaAdIp::IPv4.new(ip_section[0]).to_i==0 }.map! { |ip_section|  [ChinaAdIp::IPv4.new(ip_section[0]).to_i,ChinaAdIp::IPv4.new(ip_section[1]).to_i,ip_section[2],ip_section[3]]  }
+      if @ip_sections.nil?
+        @ip_sections = CSV.read(path) 
+        @ip_sections.reject!{|ip_section| ChinaAdIp::IPv4.new(ip_section[0]).to_i==0 }.map! { |ip_section|  [ChinaAdIp::IPv4.new(ip_section[0]).to_i,ChinaAdIp::IPv4.new(ip_section[1]).to_i,ip_section[2],ip_section[3]]  }
       end
     end
   end
@@ -72,9 +72,9 @@ module ChinaAdIp
     unless FileTest::exist?(path)
       raise(::ArgumentError, "not exists: #{path}")
     else
-      if $locations.nil?
-        $locations = CSV.read(path,:encoding=>"utf-8") 
-        $locations = Hash[$locations.map {|location| id = location.shift; [id,location << !!id.match(/^1156/)] }]
+      if @locations.nil?
+        @locations = CSV.read(path,:encoding=>"utf-8") 
+        @locations = Hash[@locations.map {|location| id = location.shift; [id,location << !!id.match(/^1156/)] }]
       end
     end
   end
@@ -84,9 +84,9 @@ module ChinaAdIp
 
     ip_addr = ChinaAdIp::IPv4.new(addr)
 
-    if $ip_sections && $locations
+    if @ip_sections && @locations
       index =  ChinaAdIp.binarysearch(self.arr_pointer,ip_addr.to_i,ip_arr.length)
-      $locations[$ip_sections[index][2]]
+      @locations[@ip_sections[index][2]]
     else
       raise(::ArgumentError, "not exists csv data")    
     end
@@ -95,12 +95,12 @@ module ChinaAdIp
 
 
   def self.ip_arr
-    @@ip_arr ||= $ip_sections.collect{|ip_section| ip_section[0]}.to_a
+    @ip_arr ||= @ip_sections.collect{|ip_section| ip_section[0]}.to_a
   end
 
   def self.arr_pointer
     buffer = LibC.malloc(ip_arr.first.size * ip_arr.size)
-    buffer.write_array_of_long ip_arr
+    @pointer ||=  buffer.write_array_of_long ip_arr
   end
 
 end
