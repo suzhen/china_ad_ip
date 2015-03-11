@@ -9,9 +9,8 @@ module ChinaAdIp
   AUTHORS         = ["suezhen <sz3001@gmail.com>"]
 
   extend FFI::Library
-  ffi_lib "libbinarysearch.so"
+  ffi_lib File.join(File.expand_path("../",__FILE__), "libbinarysearch.so") 
   attach_function :binarysearch, [:pointer,:long,:long], :long
-
 
   module LibC
       extend FFI::Library
